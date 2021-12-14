@@ -34,7 +34,7 @@ def makeDatabase(db_name):
     return cur, conn
 
 def makeSpotifytable(cur, conn, info): 
-    cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer, Popularity_Status Integer)') #Popularity Status is 1-4 and synonymous with __calculatedbreakout__ in doc plan
+    cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
     id = None
     cur.execute('SELECT max(Popularity_Status) FROM SpotifyArtist')
     try:
@@ -53,7 +53,7 @@ def makeSpotifytable(cur, conn, info):
     
     count = 0
     while count < 25: #THIS SHOULD INSERT IT 25 AT A TIME!?
-        cur.execute("INSERT OR IGNORE INTO SpotifyArtist (Artist, Popularity, Popularity_Status) VALUES (?, ?, ?)", info)
+        cur.execute("INSERT OR IGNORE INTO SpotifyArtist (Artist, Popularity) VALUES (?, ?)", info)
         conn.commit()
         id += 1
         count += 1
@@ -79,7 +79,7 @@ def main():
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
         artists.append(searchforartist(item)) #WILL HAVE TO SUBSTITUTE SEARCH FOR ARTISTS FOR A MORE CONDENSED FUNCTION RETURN
     cur, conn = makeDatabase("spotifyartists.db")
-    makeDatabase(cur, conn, artists)
+    makeSpotifytable(cur, conn, artists)
 
 
 if __name__ == "__main__":
