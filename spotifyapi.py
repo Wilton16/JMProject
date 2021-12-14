@@ -58,7 +58,22 @@ def makeSpotifytable(cur, conn, info):
         id += 1
         count += 1
     conn.commit()
+#37i9dQZF1DX0XUsuxWHRQd rapcaviar
+#37i9dQZEVXbLp5XoPON0wI top 50 usa
+#37i9dQZF1DXcBWIGoYBM5M today's top hits pop
+#37i9dQZF1DX1lVhptIYRda hot country
+#2HB9mGe8dyjusADzqY1qPO 2021 bangers
 
+def pullpopularsongs(playlistid ="2HB9mGe8dyjusADzqY1qPO"): #fields = ".artists"  + "&fields=" + fields
+    r = requests.get(baseurl + "playlists/" + playlistid, headers=headers).json()['tracks']['items']
+    print(r[0]['track']['album']['artists']) #uses a playlist called 2021 bangers
+    #dict_keys(['collaborative', 'description', 'external_urls', 'followers', 'href', 'id', 'images', 'name', 'owner', 'primary_color', 'public', 'snapshot_id', 'tracks', 'type', 'uri'])
+    #[TRACKS] dict_keys(['href', 'items', 'limit', 'next', 'offset', 'previous', 'total'])
+    popularartistlist = []
+    for item in r:
+        popularartistlist.append(item['track']['artists']['name'])
+
+    return popularartistlist
 
 def searchforsong(q, type = 'track', limit = 10): #q for search query
     '''Returns a list of song search results'''
@@ -73,8 +88,8 @@ def searchforartist(q, type = 'artist', limit = 10):
 #print(searchforartist('Drake')[0]['popularity'])
 
 #need a condensing function still!
-
-def main():
+print(pullpopularsongs('37i9dQZEVXbLp5XoPON0wI'))
+"""def main():
     artists = []
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
         artists.append(searchforartist(item)) #WILL HAVE TO SUBSTITUTE SEARCH FOR ARTISTS FOR A MORE CONDENSED FUNCTION RETURN
@@ -83,4 +98,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()"""
