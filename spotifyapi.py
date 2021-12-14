@@ -78,7 +78,7 @@ def main():
     artists = []
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
         artists.append(searchforartist(item)) #WILL HAVE TO SUBSTITUTE SEARCH FOR ARTISTS FOR A MORE CONDENSED FUNCTION RETURN
-    cur, conn = setUpDatabase("spotifyartists.db")
+    cur, conn = makeDatabase("spotifyartists.db")
     makeDatabase(cur, conn, artists)
 
 
