@@ -81,9 +81,9 @@ def searchforsong(q, type = 'track', limit = 10): #q for search query
     return r
 #print(searchforsong('Way 2 Sexy'))
 
-def searchforartist(q, type = 'artist', limit = 10):
+def searchforartistpopularity(q, type = 'artist', limit = 10):
     '''Returns a list of artist search results'''
-    r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['artists']['items']
+    r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['artists']['items'][0]['popularity']
     return r
 #print(searchforartist('Drake')[0]['popularity'])
 
@@ -94,7 +94,14 @@ for playlistid in [rapcaviar,pophits,country]: #top50usa
     for artist in pullpopularsongs(playlistid):
         if artist not in artistlist:
             artistlist.append(artist)
-print(artistlist)
+#print(artistlist)
+
+artistpopularities =[]
+for artist in artistlist:
+    artistdictionary = dict()
+    artistdictionary[artist] = searchforartistpopularity(artist)
+    artistpopularities.append(artistdictionary)
+print(artistpopularities)
 """def main():
     artists = []
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
