@@ -58,20 +58,20 @@ def makeSpotifytable(cur, conn, info):
         id += 1
         count += 1
     conn.commit()
-#37i9dQZF1DX0XUsuxWHRQd rapcaviar
-#37i9dQZEVXbLp5XoPON0wI top 50 usa
-#37i9dQZF1DXcBWIGoYBM5M today's top hits pop
-#37i9dQZF1DX1lVhptIYRda hot country
-#2HB9mGe8dyjusADzqY1qPO 2021 bangers
+rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
+top50usa = '37i9dQZEVXbLp5XoPON0wI'
+pophits= '37i9dQZF1DXcBWIGoYBM5M'
+country = '37i9dQZF1DX1lVhptIYRda'
+bangers = '2HB9mGe8dyjusADzqY1qPO'
 
 def pullpopularsongs(playlistid ="2HB9mGe8dyjusADzqY1qPO"): #fields = ".artists"  + "&fields=" + fields
     r = requests.get(baseurl + "playlists/" + playlistid, headers=headers).json()['tracks']['items']
-    print(r[0]['track']['album']['artists']) #uses a playlist called 2021 bangers
+    #print(r[0]['track']['album']['artists'][0]['name']) #uses a playlist called 2021 bangers
     #dict_keys(['collaborative', 'description', 'external_urls', 'followers', 'href', 'id', 'images', 'name', 'owner', 'primary_color', 'public', 'snapshot_id', 'tracks', 'type', 'uri'])
     #[TRACKS] dict_keys(['href', 'items', 'limit', 'next', 'offset', 'previous', 'total'])
     popularartistlist = []
     for item in r:
-        popularartistlist.append(item['track']['artists']['name'])
+        popularartistlist.append(item['track']['album']['artists'][0]['name']) #['track']['artists']['name'])
 
     return popularartistlist
 
@@ -88,7 +88,13 @@ def searchforartist(q, type = 'artist', limit = 10):
 #print(searchforartist('Drake')[0]['popularity'])
 
 #need a condensing function still!
-print(pullpopularsongs('37i9dQZEVXbLp5XoPON0wI'))
+#print(pullpopularsongs('37i9dQZEVXbLp5XoPON0wI'))
+artistlist = []
+for playlistid in [rapcaviar,pophits,country]: #top50usa
+    for artist in pullpopularsongs(playlistid):
+        if artist not in artistlist:
+            artistlist.append(artist)
+print(artistlist)
 """def main():
     artists = []
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
