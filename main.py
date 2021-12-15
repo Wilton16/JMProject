@@ -2,6 +2,7 @@ from spotifyapi import *
 from twitter import *
 
 def main():
+    '''Main Function - Runs the whole program'''
     cur, conn = makeDatabase('spotifyartistsfollowings.db')
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     followers= {}
