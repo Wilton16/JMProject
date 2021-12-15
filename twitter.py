@@ -10,6 +10,7 @@ authentication.set_access_token("2184902148-c9neyAw18DzbZbKU9XIvrTxk9sb74NrtCATH
 twitterapi = tweepy.API(auth = authentication)
 
 def makeTwittertable(cur, conn, info): 
+    """Creates a Table in the Database for Twitter"""
     cur.execute('CREATE TABLE IF NOT EXISTS TwitterFollowers (Artist Text, Followers Integer)') 
     id = None
     cur.execute('SELECT max(Followers) FROM TwitterFollowers')
@@ -36,10 +37,12 @@ def makeTwittertable(cur, conn, info):
     conn.commit()
 
 def artistsearchtwitter(artistname):
+    "Searches for an artist on twitter and pulls their follower count"
     topresult = twitterapi.search_users(q=artistname)[0]._json["followers_count"]
     return topresult
 
 def spotifytwitterlookup(playlistids):
+    """Takes a list from Spotify of artists that appear on a playlist and Searches for individual artists on twitter"""
     followerdict = {}
     for id in playlistids:
         for artist in artistlistfromplaylist([id]):
