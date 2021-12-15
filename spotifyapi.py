@@ -66,7 +66,6 @@ country = '37i9dQZF1DX1lVhptIYRda'
 bangers = '2HB9mGe8dyjusADzqY1qPO'
 
 def pullpopularsongs(playlistid): #fields = ".artists"  + "&fields=" + fields
-    print(playlistid)
     r = requests.get(baseurl + "playlists/" + playlistid, headers=headers).json()['tracks']['items']
     #print(r[0]['track']['album']['artists'][0]['name']) #uses a playlist called 2021 bangers
     #dict_keys(['collaborative', 'description', 'external_urls', 'followers', 'href', 'id', 'images', 'name', 'owner', 'primary_color', 'public', 'snapshot_id', 'tracks', 'type', 'uri'])
@@ -97,11 +96,10 @@ for playlistid in [rapcaviar,pophits,country]: #top50usa
     for artist in pullpopularsongs(playlistid):
         if artist not in artistlist:
             artistlist.append(artist)"""
-#print(artistlist)
+
 def makeartistlist(playlistids):
     listofartists = []
     for playlistid in playlistids:
-        #print("!" + str(playlistid))
         for artist in pullpopularsongs(playlistid):
             if artist not in listofartists:
                 listofartists.append(artist)
@@ -115,13 +113,15 @@ for artist in artistlist:
 print(artistpopularities)"""
 
 def makeartistpopularities(artistlist):
-    popularities_of_artists = []
+    #popularities_of_artists = []
+    artistdict = {}
     for artist in artistlist:
-        artistdict = {}
+        #artistdict = {}
         artistdict[artist] = searchforartistpopularity(artist)
-        popularities_of_artists.append(artistdict)
-    return popularities_of_artists
-
+        #popularities_of_artists.append(artistdict)
+    #return popularities_of_artists
+    return artistdict
+#print(makeartistlist([rapcaviar, pophits, country]))
 #print(makeartistpopularities(makeartistlist([rapcaviar, pophits, country])))
 
 """def main():
