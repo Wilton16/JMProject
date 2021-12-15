@@ -36,6 +36,7 @@ def makeDatabase(database):
 
 def makeSpotifytable(cur, conn, info): 
     """Creates the Spotify Artist Table"""
+    cur.execute('DROP TABLE IF EXISTS SpotifyArtist')
     cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
     id = None
     cur.execute('SELECT max(Popularity) FROM SpotifyArtist')
@@ -106,10 +107,12 @@ def main():
         popularity = makeartistpopularities(genre, popularity)
     #print(popularity)
     #print(type(popularity))
-    items = popularity.items()
-    for item in items:
+    items = str(popularity.items()).strip("dict_items(")[:-1]
+    print(items)
+    #makeSpotifytable(cur, conn, items)
+    '''for item in items:
         print(item)
-        makeSpotifytable(cur, conn, item)
+        makeSpotifytable(cur, conn, item)'''
 
 
 if __name__ == "__main__":
