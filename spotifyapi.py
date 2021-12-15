@@ -41,6 +41,7 @@ def makeSpotifytable(cur, conn):
     conn.commit()
 
 def insertspotifydata(cur, conn, info):
+    '''Inserts Spotify Data into Database'''
     #cur.execute('SELECT EXISTS(SELECT 1 FROM SpotifyArtist WHERE Artist=? LIMIT 1)', (info[0],))
     
     cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)
@@ -83,30 +84,3 @@ def makeartistpopularities(artistlist, artistdict= {}):
 #print(makeartistlist([rapcaviar, pophits, country]))
 #print(makeartistpopularities(artistlistfromplaylist([rapcaviar, pophits, country])))
 
-'''def main():
-    playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
-    cur, conn = makeDatabase("spotifyartists.db")
-    popularity = {}
-    artistlist =[]
-    for playlist in playlists.values():
-        for genre in [artistlistfromplaylist(playlist)]:
-            artistlist.append(genre)
-        popularity = makeartistpopularities(genre, popularity)
-    #print(popularity)
-    #print(type(popularity))
-    items = str(popularity.items()).strip("dict_items(")[:-1].strip('[(').strip(')]').split('), (')
-    tup = []
-    for item in items:
-        item = item.split(', ')
-        item = tuple(item)
-        tup.append(item)
-    #print(tup[0])
-    #print(type(tup[0]))
-    #makeSpotifytable(cur, conn, items)
-    makeSpotifytable(cur, conn)
-    for tupl in tup:        
-        insertspotifydata(cur, conn, tupl)
-
-
-if __name__ == "__main__":
-    main()'''
