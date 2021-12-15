@@ -9,11 +9,7 @@ authentication = tweepy.OAuthHandler("hg88yYv77DupNELwTvSuXjgWx", "LEvSK9ioZ0APv
 authentication.set_access_token("2184902148-c9neyAw18DzbZbKU9XIvrTxk9sb74NrtCATHeCD", "8jEWIYQomGmt5uwO7Y8SSzg3CRv2yiKgzjPVNPPJuw93w")
 twitterapi = tweepy.API(auth = authentication)
 
-def makeTwitterTable(cur, conn):
-    cur.execute('CREATE TABLE IF NOT EXISTS ArtistsTwitter (Artist String, Followers Integer')
-    conn.commit()
-
-'''def makeTwittertable(cur, conn, info): 
+def makeTwittertable(cur, conn, info): 
     """Creates a Table in the Database for Twitter"""
     cur.execute('CREATE TABLE IF NOT EXISTS TwitterFollowers (Artist Text, Followers Integer)') 
     id = None
@@ -38,7 +34,7 @@ def makeTwitterTable(cur, conn):
         conn.commit()
         id += 1
         count += 1
-    conn.commit()'''
+    conn.commit()
 
 def artistsearchtwitter(artistname):
     "Searches for an artist on twitter and pulls their follower count"
