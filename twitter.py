@@ -34,26 +34,3 @@ def spotifytwitterlookup(playlistids, followerdict = {}):
     return followerdict
 
 #print(spotifytwitterlookup([rapcaviar, pophits, country]))
-'''
-def main():
-    playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
-    followers= {}
-    for playlist in playlists.values():
-        #print(playlist)
-        for genre in [spotifytwitterlookup(playlist, followers)]:
-            continue
-    conn = sqlite3.connect('spotifyartists.db')
-    cur = conn.cursor()
-    makeTwittertable(cur, conn)
-    items = str(followers.items()).strip("dict_items(")[:-1].strip('[(').strip(')]').split('), (')
-    tup = []
-    for item in items:
-        item = item.split(', ')
-        item = tuple(item)
-        tup.append(item)
-    for tupl in tup:        
-        inserttwitterdata(cur, conn, tupl)
-    
-
-if __name__ == "__main__":
-    main()'''
