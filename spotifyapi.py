@@ -42,36 +42,10 @@ def makeSpotifytable(cur, conn):
 
 def insertspotifydata(cur, conn, info):
     #cur.execute('SELECT EXISTS(SELECT 1 FROM SpotifyArtist WHERE Artist=? LIMIT 1)', (info[0],))
+    
     cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)
-    '''record = cur.fetchone()
-    print(record)
-    if record[0] == 0:
-        cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)'''
-    
     conn.commit()
-    '''id = None
-    cur.execute('SELECT max(Popularity) FROM SpotifyArtist')
-    try:
-        row = cur.fetchone()
-
-        if row is None:
-            id = 0
-
-        else:
-            id = row[0]
-    except:
-        id = 0
-
-    if id is None:
-        id = 0
-    
-    count = 0
-    while count < 25: #THIS SHOULD INSERT IT 25 AT A TIME!?
-        cur.execute("INSERT OR IGNORE INTO SpotifyArtist (Artist, Popularity) VALUES (?, ?)", info)
-        conn.commit()
-        id += 1
-        count += 1
-    conn.commit()'''
+   
 
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
@@ -109,7 +83,7 @@ def makeartistpopularities(artistlist, artistdict= {}):
 #print(makeartistlist([rapcaviar, pophits, country]))
 #print(makeartistpopularities(artistlistfromplaylist([rapcaviar, pophits, country])))
 
-def main():
+'''def main():
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     cur, conn = makeDatabase("spotifyartists.db")
     popularity = {}
@@ -135,4 +109,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()'''
