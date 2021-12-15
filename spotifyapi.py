@@ -65,7 +65,8 @@ pophits= '37i9dQZF1DXcBWIGoYBM5M'
 country = '37i9dQZF1DX1lVhptIYRda'
 bangers = '2HB9mGe8dyjusADzqY1qPO'
 
-def pullpopularsongs(playlistid ="2HB9mGe8dyjusADzqY1qPO"): #fields = ".artists"  + "&fields=" + fields
+def pullpopularsongs(playlistid): #fields = ".artists"  + "&fields=" + fields
+    print(playlistid)
     r = requests.get(baseurl + "playlists/" + playlistid, headers=headers).json()['tracks']['items']
     #print(r[0]['track']['album']['artists'][0]['name']) #uses a playlist called 2021 bangers
     #dict_keys(['collaborative', 'description', 'external_urls', 'followers', 'href', 'id', 'images', 'name', 'owner', 'primary_color', 'public', 'snapshot_id', 'tracks', 'type', 'uri'])
@@ -100,6 +101,7 @@ for playlistid in [rapcaviar,pophits,country]: #top50usa
 def makeartistlist(playlistids):
     listofartists = []
     for playlistid in playlistids:
+        #print("!" + str(playlistid))
         for artist in pullpopularsongs(playlistid):
             if artist not in listofartists:
                 listofartists.append(artist)
