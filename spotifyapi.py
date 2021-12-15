@@ -58,6 +58,7 @@ def makeSpotifytable(cur, conn, info):
         id += 1
         count += 1
     conn.commit()
+    
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
 top50usa = '37i9dQZEVXbLp5XoPON0wI'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
