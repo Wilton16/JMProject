@@ -34,11 +34,22 @@ def makeDatabase(database):
     cur = conn.cursor()
     return cur, conn
 
-def makeSpotifytable(cur, conn, info): 
+def makeSpotifytable(cur, conn): 
     """Creates the Spotify Artist Table"""
     cur.execute('DROP TABLE IF EXISTS SpotifyArtist')
     cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
-    id = None
+    conn.commit()
+
+def insertspotifydata(cur, conn, info):
+    #cur.execute('SELECT EXISTS(SELECT 1 FROM SpotifyArtist WHERE Artist=? LIMIT 1)', (info[0],))
+    cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)
+    '''record = cur.fetchone()
+    print(record)
+    if record[0] == 0:
+        cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)'''
+    
+    conn.commit()
+    '''id = None
     cur.execute('SELECT max(Popularity) FROM SpotifyArtist')
     try:
         row = cur.fetchone()
@@ -60,7 +71,7 @@ def makeSpotifytable(cur, conn, info):
         conn.commit()
         id += 1
         count += 1
-    conn.commit()
+    conn.commit()'''
 
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
@@ -107,12 +118,18 @@ def main():
         popularity = makeartistpopularities(genre, popularity)
     #print(popularity)
     #print(type(popularity))
-    items = str(popularity.items()).strip("dict_items(")[:-1]
-    print(items)
+    items = str(popularity.items()).strip("dict_items(")[:-1].strip('[(').strip(')]').split('), (')
+    tup = []
+    for item in items:
+        item = item.split(', ')
+        item = tuple(item)
+        tup.append(item)
+    #print(tup[0])
+    #print(type(tup[0]))
     #makeSpotifytable(cur, conn, items)
-    '''for item in items:
-        print(item)
-        makeSpotifytable(cur, conn, item)'''
+    makeSpotifytable(cur, conn)
+    for tupl in tup:        
+        insertspotifydata(cur, conn, tupl)
 
 
 if __name__ == "__main__":
