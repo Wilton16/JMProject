@@ -78,7 +78,6 @@ def artistlistfromplaylist(playlistid):
 
 def searchforartistpopularity(q, type = 'artist', limit = 10):
     """Returns a list of a searched artist's popularity"""
-    #print("q~" + str(q))
     r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['artists']['items'][0]['popularity']
     return r
 #print(searchforartist('Drake')[0]['popularity'])
@@ -89,7 +88,7 @@ def makeartistpopularities(artistlist, artistdict= {}):
     #artistdict = {}
     for genre in artistlist:
         for artist in [genre]:
-            print(artist)
+            #print(artist)
             artistdict[artist] = searchforartistpopularity(artist)
     return artistdict
 
@@ -99,28 +98,18 @@ def makeartistpopularities(artistlist, artistdict= {}):
 def main():
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     cur, conn = makeDatabase("spotifyartists.db")
-    #info = []
-    #infodict = {}
     popularity = {}
     artistlist =[]
     for playlist in playlists.values():
         for genre in [artistlistfromplaylist(playlist)]:
             artistlist.append(genre)
         popularity = makeartistpopularities(genre, popularity)
-            #for artist in genre:
-                #print(type(artist))
-                #artist = str(artist)
-                #popularity = makeartistpopularities(artist)
-                #print("a ~ " + str(artist))
-                #popularity[artist] = searchforartistpopularity(artist)
-                #info.append(popularity)
-                #infodict[str(artist)] = popularity
-    #print(info)
-    #print(infodict)
-    print(popularity)
-    '''for item in info:
+    #print(popularity)
+    #print(type(popularity))
+    items = popularity.items()
+    for item in items:
         print(item)
-        makeSpotifytable(cur, conn, item)'''
+        makeSpotifytable(cur, conn, item)
 
 
 if __name__ == "__main__":
