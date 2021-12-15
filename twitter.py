@@ -11,7 +11,7 @@ twitterapi = tweepy.API(auth = authentication)
 
 def makeTwittertable(cur, conn): 
     """Creates a Table in the Database for Twitter"""
-    cur.execute('DROP TABLE IF EXISTS SpotifyArtist')
+    cur.execute('DROP TABLE IF EXISTS TwitterFollowers')
     cur.execute('CREATE TABLE IF NOT EXISTS TwitterFollowers (Artist Text, Followers Integer)') 
     conn.commit()
 
@@ -34,7 +34,7 @@ def spotifytwitterlookup(playlistids, followerdict = {}):
     return followerdict
 
 #print(spotifytwitterlookup([rapcaviar, pophits, country]))
-
+'''
 def main():
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     followers= {}
@@ -56,4 +56,4 @@ def main():
     
 
 if __name__ == "__main__":
-    main()
+    main()'''
