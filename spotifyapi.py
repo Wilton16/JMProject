@@ -4,7 +4,6 @@ import os
 import sqlite3
 from tweepy.parsers import RawParser
 
-
 client_id = '2dfd4eb13e4748cd9be9bfc68b88af5e'
 secret_id = '14376fb761a9464db1577ad397c3e0d1'
 
@@ -65,7 +64,6 @@ def makeSpotifytable(cur, conn, info):
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
 country = '37i9dQZF1DX1lVhptIYRda'
-
 
 def artistlistfromplaylist(playlistid):
     """Takes (a) Playlist ID(s) and searches for the playlist(s), returning a list of artists in that playlist"""
