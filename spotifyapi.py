@@ -90,19 +90,38 @@ def searchforartistpopularity(q, type = 'artist', limit = 10):
 
 #need a condensing function still!
 #print(pullpopularsongs('37i9dQZEVXbLp5XoPON0wI'))
-artistlist = []
+
+"""artistlist = []
 for playlistid in [rapcaviar,pophits,country]: #top50usa
     for artist in pullpopularsongs(playlistid):
         if artist not in artistlist:
-            artistlist.append(artist)
+            artistlist.append(artist)"""
 #print(artistlist)
+def makeartistlist(playlistids):
+    listofartists = []
+    for playlistid in playlistids:
+        for artist in pullpopularsongs(playlistid):
+            if artist not in listofartists:
+                listofartists.append(artist)
+    return listofartists
 
-artistpopularities =[]
+"""artistpopularities =[]
 for artist in artistlist:
     artistdictionary = dict()
     artistdictionary[artist] = searchforartistpopularity(artist)
     artistpopularities.append(artistdictionary)
-print(artistpopularities)
+print(artistpopularities)"""
+
+def makeartistpopularities(artistlist):
+    popularities_of_artists = []
+    for artist in artistlist:
+        artistdict = {}
+        artistdict[artist] = searchforartistpopularity(artist)
+        popularities_of_artists.append(artistdict)
+    return popularities_of_artists
+
+#print(makeartistpopularities(makeartistlist([rapcaviar, pophits, country])))
+
 """def main():
     artists = []
     for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
