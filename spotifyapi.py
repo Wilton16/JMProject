@@ -27,10 +27,10 @@ headers = {
 
 baseurl = 'https://api.spotify.com/v1/'
 
-def makeDatabase(db_name):
+def makeDatabase(database):
     """Creates an Inital Database"""
     path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(path+'/'+db_name)
+    conn = sqlite3.connect(path+'/'+database)
     cur = conn.cursor()
     return cur, conn
 
@@ -91,15 +91,16 @@ def makeartistpopularities(artistlist):
     return artistdict
 
 #print(makeartistlist([rapcaviar, pophits, country]))
-#print(makeartistpopularities(makeartistlist([rapcaviar, pophits, country])))
+#print(makeartistpopularities(artistlistfromplaylist([rapcaviar, pophits, country])))
 
-"""def main():
-    artists = []
-    for item in ["Drake", "Dababy", "Megan Thee Stallion"]:
-        artists.append(searchforartist(item)) #WILL HAVE TO SUBSTITUTE SEARCH FOR ARTISTS FOR A MORE CONDENSED FUNCTION RETURN
+def main():
+    playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     cur, conn = makeDatabase("spotifyartists.db")
+    info = 
+    for playlist in playlists:
+
     makeSpotifytable(cur, conn, artists)
 
 
 if __name__ == "__main__":
-    main()"""
+    main()
