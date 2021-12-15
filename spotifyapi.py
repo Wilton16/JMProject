@@ -34,7 +34,11 @@ def makeDatabase(database):
     cur = conn.cursor()
     return cur, conn
 
-def makeSpotifytable(cur, conn, info): 
+def makeSpotifyTable(cur, conn):
+    cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtists (Artist String, Popularity Integer')
+    conn.commit()
+
+'''def makeSpotifytable(cur, conn, info): 
     """Creates the Spotify Artist Table"""
     cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
     id = None
@@ -59,7 +63,7 @@ def makeSpotifytable(cur, conn, info):
         conn.commit()
         id += 1
         count += 1
-    conn.commit()
+    conn.commit()'''
 
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
@@ -93,7 +97,7 @@ def makeartistpopularities(artistlist):
 #print(makeartistlist([rapcaviar, pophits, country]))
 #print(makeartistpopularities(artistlistfromplaylist([rapcaviar, pophits, country])))
 
-def main():
+'''def main():
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     cur, conn = makeDatabase("spotifyartists.db")
     info = 
@@ -103,4 +107,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()'''
