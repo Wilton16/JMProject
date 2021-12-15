@@ -1,6 +1,9 @@
 from requests import auth
 import tweepy
 import json
+import os
+import sqlite3
+from spotifyapi import makeartistlist, makeartistpopularities
 #from tweepy.client import Client
 
 
@@ -44,5 +47,17 @@ def artistsearchtwitter(artistname):
     topresult = twitterapi.search_users(q=artistname)[0]._json["followers_count"]
     return topresult
 
+def spotifytwitterlookup(playlistids):
+    artistfollowers=[]
+    #print(playlistids)
+    for id in playlistids:
+        #print("!!!!" + str(id))
+        for artist in makeartistlist([id]):
+            artistfollowers.append(artist + " Followers: " + str(artistsearchtwitter(artist)))
+    return artistfollowers
+
+print("HERE WE GO" + str(spotifytwitterlookup(["37i9dQZF1DX0XUsuxWHRQd"])))
+#for artist in makeartistlist(['37i9dQZF1DX0XUsuxWHRQd']):
+#    print(artist + " " + str(artistsearchtwitter(artist)))
 #for artist in ["Drake", "Kanye West", "Dababy", "Meg Thee Stallion", "Taylor Swift", "Doja Cat"]:
 #    print(artist + " ~~ " + str(artistsearchtwitter(artist)))
