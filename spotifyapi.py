@@ -2,7 +2,6 @@ import requests
 import json
 import os
 import sqlite3
-
 from tweepy.parsers import RawParser
 
 
@@ -64,10 +63,9 @@ def makeSpotifytable(cur, conn, info):
     conn.commit()
 
 rapcaviar= '37i9dQZF1DX0XUsuxWHRQd'
-top50usa = '37i9dQZEVXbLp5XoPON0wI'
 pophits= '37i9dQZF1DXcBWIGoYBM5M'
 country = '37i9dQZF1DX1lVhptIYRda'
-bangers = '2HB9mGe8dyjusADzqY1qPO'
+
 
 def artistlistfromplaylist(playlistid):
     """Takes (a) Playlist ID(s) and searches for the playlist(s), returning a list of artists in that playlist"""
