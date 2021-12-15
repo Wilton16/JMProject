@@ -3,6 +3,8 @@ import json
 import os
 import sqlite3
 
+from tweepy.parsers import RawParser
+
 
 client_id = '2dfd4eb13e4748cd9be9bfc68b88af5e'
 secret_id = '14376fb761a9464db1577ad397c3e0d1'
@@ -28,12 +30,14 @@ headers = {
 baseurl = 'https://api.spotify.com/v1/'
 
 def makeDatabase(db_name):
+    """Creates an Inital Database"""
     path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(path+'/'+db_name)
     cur = conn.cursor()
     return cur, conn
 
 def makeSpotifytable(cur, conn, info): 
+    """Creates the Spotify Artist Table"""
     cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
     id = None
     cur.execute('SELECT max(Popularity) FROM SpotifyArtist')
@@ -65,62 +69,31 @@ pophits= '37i9dQZF1DXcBWIGoYBM5M'
 country = '37i9dQZF1DX1lVhptIYRda'
 bangers = '2HB9mGe8dyjusADzqY1qPO'
 
-def pullpopularsongs(playlistid): #fields = ".artists"  + "&fields=" + fields
-    r = requests.get(baseurl + "playlists/" + playlistid, headers=headers).json()['tracks']['items']
-    #print(r[0]['track']['album']['artists'][0]['name']) #uses a playlist called 2021 bangers
-    #dict_keys(['collaborative', 'description', 'external_urls', 'followers', 'href', 'id', 'images', 'name', 'owner', 'primary_color', 'public', 'snapshot_id', 'tracks', 'type', 'uri'])
-    #[TRACKS] dict_keys(['href', 'items', 'limit', 'next', 'offset', 'previous', 'total'])
+def artistlistfromplaylist(playlistid):
+    """Takes (a) Playlist ID(s) and searches for the playlist(s), returning a list of artists in that playlist"""
     popularartistlist = []
-    for item in r:
-        popularartistlist.append(item['track']['album']['artists'][0]['name']) #['track']['artists']['name'])
-
+    for id in playlistid:
+        r = requests.get(baseurl + "playlists/" + id, headers=headers).json()['tracks']['items']
+        for item in r:
+            if item['track']['album']['artists'][0]['name'] not in popularartistlist:
+                popularartistlist.append(item['track']['album']['artists'][0]['name'])
     return popularartistlist
-
-def searchforsong(q, type = 'track', limit = 10): #q for search query
-    '''Returns a list of song search results'''
-    r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['tracks']['items']
-    return r
-#print(searchforsong('Way 2 Sexy'))
+#print(artistlistfromplaylist(rapcaviar))
 
 def searchforartistpopularity(q, type = 'artist', limit = 10):
-    '''Returns a list of artist search results'''
+    """Returns a list of a searched artist's popularity"""
     r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['artists']['items'][0]['popularity']
     return r
 #print(searchforartist('Drake')[0]['popularity'])
 
-#need a condensing function still!
-#print(pullpopularsongs('37i9dQZEVXbLp5XoPON0wI'))
-
-"""artistlist = []
-for playlistid in [rapcaviar,pophits,country]: #top50usa
-    for artist in pullpopularsongs(playlistid):
-        if artist not in artistlist:
-            artistlist.append(artist)"""
-
-def makeartistlist(playlistids):
-    listofartists = []
-    for playlistid in playlistids:
-        for artist in pullpopularsongs(playlistid):
-            if artist not in listofartists:
-                listofartists.append(artist)
-    return listofartists
-
-"""artistpopularities =[]
-for artist in artistlist:
-    artistdictionary = dict()
-    artistdictionary[artist] = searchforartistpopularity(artist)
-    artistpopularities.append(artistdictionary)
-print(artistpopularities)"""
-
+#print(artistlistfromplaylist([rapcaviar, pophits, country]))
 def makeartistpopularities(artistlist):
-    #popularities_of_artists = []
+    "Creates a Dictionary of Artists and their Popularities"
     artistdict = {}
     for artist in artistlist:
-        #artistdict = {}
         artistdict[artist] = searchforartistpopularity(artist)
-        #popularities_of_artists.append(artistdict)
-    #return popularities_of_artists
     return artistdict
+
 #print(makeartistlist([rapcaviar, pophits, country]))
 #print(makeartistpopularities(makeartistlist([rapcaviar, pophits, country])))
 
