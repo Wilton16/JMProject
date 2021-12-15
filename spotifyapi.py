@@ -66,10 +66,9 @@ pophits= '37i9dQZF1DXcBWIGoYBM5M'
 country = '37i9dQZF1DX1lVhptIYRda'
 
 def artistlistfromplaylist(playlistid):
-    print(type(playlistid))
     """Takes (a) Playlist ID(s) and searches for the playlist(s), returning a list of artists in that playlist"""
     popularartistlist = []
-    for id in playlistid:
+    for id in [playlistid]:
         r = requests.get(baseurl + "playlists/" + id, headers=headers).json()['tracks']['items']
         for item in r:
             if item['track']['album']['artists'][0]['name'] not in popularartistlist:
@@ -79,16 +78,19 @@ def artistlistfromplaylist(playlistid):
 
 def searchforartistpopularity(q, type = 'artist', limit = 10):
     """Returns a list of a searched artist's popularity"""
+    #print("q~" + str(q))
     r = requests.get(baseurl + 'search?q=' + q + '&type=' + type + '&limit=' + str(limit), headers=headers).json()['artists']['items'][0]['popularity']
     return r
 #print(searchforartist('Drake')[0]['popularity'])
 
 #print(artistlistfromplaylist([rapcaviar, pophits, country]))
-def makeartistpopularities(artistlist):
+def makeartistpopularities(artistlist, artistdict= {}):
     "Creates a Dictionary of Artists and their Popularities"
-    artistdict = {}
-    for artist in artistlist:
-        artistdict[artist] = searchforartistpopularity(artist)
+    #artistdict = {}
+    for genre in artistlist:
+        for artist in [genre]:
+            print(artist)
+            artistdict[artist] = searchforartistpopularity(artist)
     return artistdict
 
 #print(makeartistlist([rapcaviar, pophits, country]))
@@ -97,11 +99,28 @@ def makeartistpopularities(artistlist):
 def main():
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     cur, conn = makeDatabase("spotifyartists.db")
-    info = []
+    #info = []
+    #infodict = {}
+    popularity = {}
+    artistlist =[]
     for playlist in playlists.values():
-        for artist in makeartistpopularities(artistlistfromplaylist(playlist)):
-            info.append(artist)
-    makeSpotifytable(cur, conn, info)
+        for genre in [artistlistfromplaylist(playlist)]:
+            artistlist.append(genre)
+        popularity = makeartistpopularities(genre, popularity)
+            #for artist in genre:
+                #print(type(artist))
+                #artist = str(artist)
+                #popularity = makeartistpopularities(artist)
+                #print("a ~ " + str(artist))
+                #popularity[artist] = searchforartistpopularity(artist)
+                #info.append(popularity)
+                #infodict[str(artist)] = popularity
+    #print(info)
+    #print(infodict)
+    print(popularity)
+    '''for item in info:
+        print(item)
+        makeSpotifytable(cur, conn, item)'''
 
 
 if __name__ == "__main__":
