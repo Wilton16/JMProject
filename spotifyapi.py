@@ -80,13 +80,15 @@ country = '37i9dQZF1DX1lVhptIYRda'
 def artistlistfromplaylist(playlistid):
     """Takes (a) Playlist ID(s) and searches for the playlist(s), returning a list of artists in that playlist"""
     popularartistlist = []
+    #print(playlistid)
     for id in [playlistid]:
-        r = requests.get(baseurl + "playlists/" + id, headers=headers).json()['tracks']['items']
+        #print("!!" + str(id))
+        r = requests.get(baseurl + "playlists/" + str(playlistid), headers=headers).json()['tracks']['items'] #[0]
         for item in r:
             if item['track']['album']['artists'][0]['name'] not in popularartistlist:
                 popularartistlist.append(item['track']['album']['artists'][0]['name'])
     return popularartistlist
-#print(artistlistfromplaylist(rapcaviar))
+#print(artistlistfromplaylist(pophits))
 
 def searchforartistpopularity(q, type = 'artist', limit = 10):
     """Returns a list of a searched artist's popularity"""
