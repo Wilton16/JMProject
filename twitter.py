@@ -12,7 +12,8 @@ twitterapi = tweepy.API(auth = authentication)
 def makeTwittertable(cur, conn): 
     """Creates a Table in the Database for Twitter"""
     cur.execute('DROP TABLE IF EXISTS TwitterFollowers')
-    cur.execute('CREATE TABLE IF NOT EXISTS TwitterFollowers (Artist Text, Followers Integer)') 
+    for i in range(25):
+        cur.execute('CREATE TABLE IF NOT EXISTS TwitterFollowers (Artist Text, Followers Integer)') 
     conn.commit()
 
 def inserttwitterdata(cur, conn, info):
