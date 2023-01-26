@@ -1,9 +1,9 @@
 from spotifyapi import *
 from twitter import *
-
+#import matplotlib.pyplot as plt
 def main():
     '''Main Function - Runs the whole program'''
-    cur, conn = makeDatabase('spotifyartistsfollowings.db')
+    cur, conn = makeDatabase('newnewtwentyfive.db')
     playlists = {"rapcaviar": '37i9dQZF1DX0XUsuxWHRQd', "pophits" : '37i9dQZF1DXcBWIGoYBM5M', "country": '37i9dQZF1DX1lVhptIYRda'}
     followers= {}
     popularity = {}
@@ -26,6 +26,9 @@ def main():
         item = item.split(', ')
         item = tuple(item)
         ttup.append(item)
+    '''plt.bar(stup[0],stup[1])
+    plt.bar(ttup[0],ttup[1])
+    plt.show()'''
     makeSpotifytable(cur, conn)
     makeTwittertable(cur, conn)
     '''tl = len(ttup)
