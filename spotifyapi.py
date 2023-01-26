@@ -37,14 +37,15 @@ def makeDatabase(database):
 def makeSpotifytable(cur, conn): 
     """Creates the Spotify Artist Table"""
     cur.execute('DROP TABLE IF EXISTS SpotifyArtist')
+    
     cur.execute('CREATE TABLE IF NOT EXISTS SpotifyArtist (Artist Text, Popularity Integer)') 
     conn.commit()
 
 def insertspotifydata(cur, conn, info):
     '''Inserts Spotify Data into Database'''
     #cur.execute('SELECT EXISTS(SELECT 1 FROM SpotifyArtist WHERE Artist=? LIMIT 1)', (info[0],))
-    
-    cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)
+    for i in range(25):
+        cur.execute('INSERT INTO SpotifyArtist (Artist, Popularity) VALUES (?,?)', info)
     conn.commit()
    
 
